@@ -1,0 +1,26 @@
+{
+  "$schema": "./schemas/app-config.schema.json",
+  "name": "OneFile Album",
+  "nameJa": "OneFile Album",
+  "slug": "onefile-album",
+  "version": "1.0.0",
+  "description": "Package multiple images and an offline viewer into one self-contained HTML album, with optional organizing, chapters, comments, and WebP optimization.",
+  "descriptionJa": "複数画像をビューアごと1つの自己完結HTMLへまとめ、必要に応じて軽量化・並び替え・章・コメントを追加できるブラウザーツールです。",
+  "defaultLanguage": "auto",
+  "repository": {
+    "owner": "ttomohisa",
+    "name": "htmlapps-onefile-album"
+  },
+  "build": {
+    "output": "dist/index.html",
+    "blockRuntimeNetwork": true,
+    "selfExtract": {
+      "enabled": true,
+      "output": "dist/index.self-extract.html"
+    },
+    "sizeBudget": {
+      "readableWarningMb": 2,
+      "selfExtractWarningMb": 1
+    }
+  }
+}
