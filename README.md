@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://ttomohisa.github.io/htmlapps-onefile-album/)
+[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://browser-kitty.com/tools/onefile-album/)
 
 [日本語版 README](README.ja.md)
 
@@ -10,11 +10,11 @@ A privacy-focused, single-HTML app that packages multiple local images together 
 
 ## 🚀 Live demo
 
-### [Open OneFile Album on GitHub Pages](https://ttomohisa.github.io/htmlapps-onefile-album/)
+### [Open OneFile Album on Browser Kitty](https://browser-kitty.com/tools/onefile-album/)
 
-GitHub Pages delivers only the initial application HTML. After it loads, image reading, WebP optimization, sorting, chapters, comments, preview, album generation, and saved-album re-editing are processed locally on your device. The images you select are not uploaded by the app.
+Browser Kitty delivers only the initial application HTML. After it loads, image reading, WebP optimization, sorting, chapters, comments, preview, album generation, and saved-album re-editing are processed locally on your device. The images you select are not uploaded by the app.
 
-[![OneFile Album screenshot](assets/screenshot.png)](https://ttomohisa.github.io/htmlapps-onefile-album/)
+[![OneFile Album screenshot](assets/screenshot-en.png)](https://browser-kitty.com/tools/onefile-album/)
 
 ## Features
 
@@ -24,14 +24,14 @@ GitHub Pages delivers only the initial application HTML. After it loads, image r
 - **Add structure and context** — Insert chapter dividers, collapse large chapters while editing, and attach comments to individual images.
 - **Re-edit saved albums** — Open a previously generated OneFile Album HTML, restore its embedded images and editing metadata, then revise and create a new file.
 - **Preview before creating the file** — Open the same generated viewer in a final preview before saving the album.
-- **A viewer that travels with the images** — Thumbnails, previous / next navigation, swipe, pinch zoom, fullscreen, slideshow, search, viewer settings, and extraction of the current embedded image are all included.
+- **A viewer that travels with the images** — Thumbnails, previous / next navigation, swipe, pinch zoom, fullscreen, slideshow, search, viewer settings, and extraction of the current embedded image are all included. Generated albums use a standard **info (i) toolbar button** for provenance/help, including the Browser Kitty (OneFile Album) editor link, re-edit instructions, offline/sharing notes, and the HTML creation time.
 - **Private, single-HTML operation** — No runtime network requests, no account, Japanese / English UI, and no server required for the generated album.
 
 ## Quick start
 
 ### Use the web demo
 
-Just [open the demo](https://ttomohisa.github.io/htmlapps-onefile-album/). No installation or account is required.
+Just [open the demo](https://browser-kitty.com/tools/onefile-album/). No installation or account is required.
 
 ### Use the download file
 
@@ -54,13 +54,13 @@ Python, Node.js, and a local web server are not required. The builder uses Windo
 
 The shortest path is **Add images → Create HTML**. Optimization and organization are optional.
 
-1. **Add images** — Add JPEG / PNG / WebP files by picker or drag and drop. The original image bytes are immediately available for album creation.
-2. **Reduce file size (optional)** — Choose WebP optimization when you want a smaller album. Compare the total original image size with the images that will be embedded in the HTML.
+1. **Add images** — Add JPEG / PNG / WebP files by picker or drag and drop. Continue with **Next: Reduce file size →**, or use **Quick create** when you want to export immediately.
+2. **Reduce file size (optional)** — Choose WebP optimization when you want a smaller album. Compare the total original image size with the images that will be embedded in the HTML, then continue with **Next: Edit order, chapters & comments →**.
 3. **Order, chapters & comments (optional)** — Sort automatically, drag cards into a new order, create chapter dividers, collapse chapters, or add comments.
 4. **Album settings (optional)** — Set the album title, choose or create a favicon, and configure the generated viewer.
-5. **Create HTML** — Check the estimated output size, open the final preview if needed, choose the filename, and create the self-contained HTML album.
+5. **Create HTML** — Follow the simplified **filename → size check → save** flow. Final preview is a secondary action when it is useful.
 
-On mobile, the same five stages are available as fixed bottom tabs: **Add / Optimize / Organize / Album / Export**. Card sorting starts with a short long-press so a normal vertical swipe can still scroll the page.
+On mobile, the same five stages are available as fixed bottom tabs: **Add / Optimize / Organize / Album / Export**. If images are loaded, going back, reloading, or closing the tab triggers the browser's unsaved-work confirmation because the edit session is held in memory. Card sorting starts with a short long-press so a normal vertical swipe can still scroll the page.
 
 ### Re-edit a saved album
 
@@ -71,6 +71,8 @@ Choose **Open saved HTML** in the first stage and select a OneFile Album HTML th
 **Keep originals** embeds the JPEG / PNG / WebP source bytes as the full-image payload. This avoids full-image re-encoding, keeps metadata already present in those bytes, and allows the viewer to extract the embedded image again in its original format.
 
 **WebP optimization** uses browser-native decoding and Canvas APIs. The default maximum long edge is the original size, with 3840 / 2560 / 1920 / 1280 px presets and validated custom input from 320 to 16384 px. WebP re-encoding does not guarantee preservation of the source EXIF / GPS metadata.
+
+On memory-constrained environments such as Android phones, OneFile Album removes Ultra HDR gain-map data when possible, decodes toward the target size, prefers `OffscreenCanvas`, and retries at progressively smaller pixel budgets. If an image still cannot be converted safely, only that image is kept as its original bytes and album creation continues.
 
 ### Selecting and reordering images
 
@@ -134,7 +136,7 @@ The repository includes a workflow that builds the standalone HTML, verifies it,
 1. Push the repository to GitHub as `htmlapps-onefile-album`.
 2. Open **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**.
 3. Push to `main`, or manually run **Deploy standalone app to GitHub Pages** from the Actions tab.
-4. After a successful deployment, the demo is available at `https://ttomohisa.github.io/htmlapps-onefile-album/`.
+4. GitHub Pages publishes this repository's `dist`. The production Browser Kitty entry point is [OneFile Album](https://browser-kitty.com/tools/onefile-album/).
 
 Each push to `main` runs the repository checks, rebuilds the standalone HTML, verifies offline constraints, and publishes the `dist` directory when GitHub Pages is enabled.
 
@@ -183,13 +185,13 @@ The current `dependencies.json` contains no runtime third-party libraries, so On
 
 The generated application and generated albums use a Content Security Policy containing `connect-src 'none'`. Selected image data stays in browser memory and is not uploaded by the application.
 
-The GitHub Pages version requires the initial HTML request to load the app, but image processing and album creation are local. For use with the network completely disconnected, open `dist/index.html` locally.
+The Browser Kitty hosted version requires the initial HTML request to load the app, but image processing and album creation are local. For use with the network completely disconnected, open `dist/index.html` locally.
 
 Saved viewer preferences may use browser-local storage when available, but source image bytes are not persisted there by the editor.
 
 ## Limitations
 
-- Input formats in v1.0.0 are JPEG / PNG / WebP.
+- Input formats in v1.0.1 are JPEG / PNG / WebP.
 - HEIC / HEIF is not supported.
 - Animated images may be treated as still images when WebP optimization is used.
 - WebP optimization re-encodes the image and does not preserve original EXIF / GPS metadata.
@@ -199,7 +201,7 @@ Saved viewer preferences may use browser-local storage when available, but sourc
 
 ## Dependencies
 
-OneFile Album v1.0.0 has **no bundled third-party runtime library dependency**. Browser APIs and system fonts are used directly.
+OneFile Album v1.0.1 has **no bundled third-party runtime library dependency**. Browser APIs and system fonts are used directly.
 
 Drag and drop is implemented with Pointer Events and does not require a drag library. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for repository policy and notices.
 

@@ -12,3 +12,4 @@ When adding a package to `dependencies.json`:
 4. Commit the regenerated `dist/dependency-manifest.json` only if the repository policy chooses to track generated artifacts.
 
 Do not assume that a package being available from npm makes it compatible with MIT redistribution.
+

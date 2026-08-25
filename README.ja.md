@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://ttomohisa.github.io/htmlapps-onefile-album/)
+[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://browser-kitty.com/tools/onefile-album/)
 
 [English README](README.md)
 
@@ -10,11 +10,11 @@
 
 ## 🚀 デモ
 
-### [GitHub PagesでOneFile Albumを開く](https://ttomohisa.github.io/htmlapps-onefile-album/)
+### [Browser KittyでOneFile Albumを開く](https://browser-kitty.com/tools/onefile-album/)
 
-GitHub Pagesから最初のアプリHTMLを読み込んだ後、画像の読み込み、WebP軽量化、並び替え、章・コメント編集、完成プレビュー、HTML生成、保存済みアルバムの再編集は端末内で処理されます。選択した画像がアプリからサーバーへアップロードされることはありません。
+Browser Kittyから最初のアプリHTMLを読み込んだ後、画像の読み込み、WebP軽量化、並び替え、章・コメント編集、完成プレビュー、HTML生成、保存済みアルバムの再編集は端末内で処理されます。選択した画像がアプリからサーバーへアップロードされることはありません。
 
-[![OneFile Albumの画面](assets/screenshot.png)](https://ttomohisa.github.io/htmlapps-onefile-album/)
+[![OneFile Albumの画面](assets/screenshot.png)](https://browser-kitty.com/tools/onefile-album/)
 
 ## 主な機能
 
@@ -24,14 +24,14 @@ GitHub Pagesから最初のアプリHTMLを読み込んだ後、画像の読み�
 - **章とコメントでアルバムを整理** — 章区切り、画像ごとのコメント、大量画像向けの章折りたたみを利用できます。
 - **保存済みHTMLを再編集** — 以前作成したOneFile Albumを読み戻し、画像・章・コメント・設定を復元して編集を続けられます。
 - **保存前に完成形を確認** — 実際に生成されるものと同じビューアを完成プレビューとして確認できます。
-- **ビューアも一緒に持ち運べる** — サムネイル、前後移動、スワイプ、ピンチズーム、全画面、スライドショー、検索、表示設定、画像切り出しまでHTML内に含まれます。
+- **ビューアも一緒に持ち運べる** — サムネイル、前後移動、スワイプ、ピンチズーム、全画面、スライドショー、検索、表示設定、画像切り出しまでHTML内に含まれます。生成HTMLの右上には他の操作と揃えた **i（情報）ボタン** があり、Browser Kitty (OneFile Album) の編集リンク、再編集方法、オフライン閲覧・共有方法、HTML作成日時を確認できます。
 - **完全ローカル処理の単一HTML** — 実行時の外部通信なし、アカウント不要、日本語 / English UI、生成後のアルバムもサーバー不要です。
 
 ## すぐに使う
 
 ### Webで使う
 
-[デモを開く](https://ttomohisa.github.io/htmlapps-onefile-album/)だけで利用できます。インストールやアカウント登録は不要です。
+[デモを開く](https://browser-kitty.com/tools/onefile-album/)だけで利用できます。インストールやアカウント登録は不要です。
 
 ### ダウンロードして使う
 
@@ -54,13 +54,13 @@ Python、Node.js、ローカルWebサーバーは不要です。ビルドにはW
 
 最短なら **「画像を追加 → HTMLを作成」** だけです。軽量化や整理はすべて任意です。
 
-1. **画像を追加** — JPEG / PNG / WebP を選択、またはドラッグ&ドロップします。追加した時点で元画像のままHTMLを作成できます。
-2. **容量を軽くする（任意）** — アルバムを小さくしたいときだけWebP軽量化を選びます。元画像とHTML内画像の合計容量を比較できます。
+1. **画像を追加** — JPEG / PNG / WebP を選択、またはドラッグ&ドロップします。追加後は **「次へ: 容量を軽くする →」** が主導線で、すぐ出力したい場合は **「クイック作成」** を使えます。
+2. **容量を軽くする（任意）** — アルバムを小さくしたいときだけWebP軽量化を選びます。元画像とHTML内画像の合計容量を比較でき、終わったら **「次へ: 並び順・章・コメントを編集 →」** へ進めます。
 3. **並び順・章・コメント（任意）** — 自動整列、カードのドラッグ、章区切り、章折りたたみ、コメント追加でアルバムを整理します。
 4. **アルバム設定（任意）** — タイトル、favicon、生成ビューアの表示設定を調整します。
-5. **HTMLを作成** — 予測サイズを確認し、必要なら完成プレビューを開いてから、ファイル名を決めて自己完結HTMLを作成します。
+5. **HTMLを作成** — **ファイル名 → 容量確認 → 保存** の順に確認します。完成プレビューは必要なときだけ使える補助操作です。
 
-スマホでは同じ5工程を、下部固定タブの **追加 / 軽量化 / 整理 / アルバム / 出力** で切り替えます。並び替えは短い長押しで開始するため、通常の縦スワイプはページスクロールとして使えます。
+スマホでは同じ5工程を、下部固定タブの **追加 / 軽量化 / 整理 / アルバム / 出力** で切り替えます。画像を追加した編集中の状態で戻る・再読み込み・タブを閉じる操作をすると、内容消失を避けるためブラウザーの確認が入ります。並び替えは短い長押しで開始するため、通常の縦スワイプはページスクロールとして使えます。
 
 ### 保存済みアルバムを再編集する
 
@@ -73,6 +73,8 @@ OneFile Albumでは、生成したHTMLそのものをアルバムの保存形式
 **そのまま入れる**では、JPEG / PNG / WebP の元バイト列をフル画像としてHTMLへ埋め込みます。フル画像を再エンコードしないため画質劣化がなく、元バイト列に含まれるメタデータもそのまま保持されます。生成ビューアから画像を切り出す際も、埋め込まれた元形式で保存できます。
 
 **WebPで軽量化**では、ブラウザー標準の画像デコードとCanvas APIを利用します。最大長辺の初期値は「元サイズ」で、3840 / 2560 / 1920 / 1280 pxのプリセットと、320〜16384 pxの自由入力に対応します。WebPへの再エンコードでは、元画像のEXIF / GPS等が保持されることを保証しません。
+
+Androidなどのメモリ制約が厳しい環境では、可能な場合はUltra HDRのGain Mapを先に外し、目標サイズでのデコード、`OffscreenCanvas`、段階的な縮小再試行を使います。それでも安全にWebP化できない画像だけは元バイト列のまま保持し、アルバム全体の作成は続行します。
 
 ### 画像の選択と並び替え
 
@@ -136,7 +138,7 @@ OneFile Albumでは絶対上限ではなく、実用上の目安を表示しま�
 1. リポジトリ名を `htmlapps-onefile-album` としてGitHubへプッシュします。
 2. **Settings → Pages → Build and deployment → Source** で **GitHub Actions** を選択します。
 3. `main` ブランチへプッシュするか、Actions画面から **Deploy standalone app to GitHub Pages** を手動実行します。
-4. ビルド成功後、`https://ttomohisa.github.io/htmlapps-onefile-album/` で公開されます。
+4. GitHub Pages側にはこのリポジトリの `dist` が公開されます。Browser Kittyでの公開先は [OneFile Album](https://browser-kitty.com/tools/onefile-album/) です。
 
 `main` へのプッシュ時には、リポジトリ検証、単一HTMLの再ビルド、オフライン要件の検査を行い、GitHub Pagesが有効な場合に `dist` を公開します。
 
@@ -183,13 +185,13 @@ build-standalone.bat
 
 生成されたアプリ本体と生成アルバムは、`connect-src 'none'` を含むContent Security Policyを使用します。選択した画像データはブラウザーのメモリ上で処理され、アプリからアップロードされません。
 
-GitHub Pages版ではアプリ本体を開くための最初のHTML配信は発生しますが、画像処理とアルバム生成は端末内です。ネットワークを完全に切って使う場合は `dist/index.html` をローカルで開いてください。
+Browser Kittyの公開版ではアプリ本体を開くための最初のHTML配信は発生しますが、画像処理とアルバム生成は端末内です。ネットワークを完全に切って使う場合は `dist/index.html` をローカルで開いてください。
 
 ビューア設定など一部のUI設定は利用可能な場合にブラウザーのローカルストレージへ保存されますが、編集側が元画像バイト列をそこへ永続保存することはありません。
 
 ## 制限事項
 
-- v1.0.0 の入力形式は JPEG / PNG / WebP です。
+- v1.0.1 の入力形式は JPEG / PNG / WebP です。
 - HEIC / HEIF には対応していません。
 - WebP軽量化を使うと、アニメーション画像は静止画として扱われる場合があります。
 - WebP軽量化では画像を再エンコードするため、元のEXIF / GPS等を保持しません。
@@ -199,7 +201,7 @@ GitHub Pages版ではアプリ本体を開くための最初のHTML配信は発�
 
 ## 使用ライブラリ
 
-OneFile Album v1.0.0 は、**実行時に内包するサードパーティライブラリを使用していません**。ブラウザーAPIとシステムフォントを直接利用します。
+OneFile Album v1.0.1 は、**実行時に内包するサードパーティライブラリを使用していません**。ブラウザーAPIとシステムフォントを直接利用します。
 
 ドラッグ処理も外部ライブラリを使わずPointer Eventsで実装しています。リポジトリの方針と通知については [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) を確認してください。
 

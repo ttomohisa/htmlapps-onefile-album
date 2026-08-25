@@ -21,11 +21,11 @@ The application supports two full-image strategies: preserve source image bytes,
 
 Desktop exposes five numbered stages. Mobile exposes the same five stages as fixed bottom tabs:
 
-1. **Add images** — selecting images creates thumbnails and makes original bytes immediately exportable. Users may also open a saved OneFile Album HTML for re-editing.
-2. **Reduce file size (optional)** — expose WebP optimization as an independent step with BEFORE (original images) → AFTER (images in HTML) size comparison.
+1. **Add images** — selecting images creates thumbnails and makes original bytes immediately exportable. Users may also open a saved OneFile Album HTML for re-editing. After images are ready, the primary continuation is **Next: Reduce file size**, with **Quick create** as the secondary shortcut.
+2. **Reduce file size (optional)** — expose WebP optimization as an independent step with BEFORE (original images) → AFTER (images in HTML) size comparison, followed by a clear **Next: Order, chapters & comments** action.
 3. **Order, chapters & comments (optional)** — automatic sorting, manual drag ordering, chapter dividers, chapter collapse, and comments.
 4. **Album settings (optional)** — album title, generated-viewer display options, and favicon.
-5. **Create HTML** — estimated size, final viewer preview, output filename, and the primary **Create HTML** action. If WebP optimization is selected but pending, offer **Optimize & create HTML** and require confirmation before creating with originals instead.
+5. **Create HTML** — present a simple three-part finish flow: output filename, estimated size, then save. Final viewer preview is secondary and hidden while a pending WebP conversion makes it invalid. If WebP optimization is selected but pending, offer **Optimize & create HTML** as the primary action and clearly label the original-image fallback.
 
 After at least one image exists, a compact current-album summary shows image count and estimated output size and offers direct navigation to optimization or export.
 
@@ -36,7 +36,8 @@ After at least one image exists, a compact current-album summary shows image cou
 - Accept multiple JPEG, PNG, and WebP files.
 - Work from `file://` with runtime network disabled.
 - Generate a small WebP thumbnail for every source image.
-- Newly added images are immediately exportable using original bytes.
+- Serialize thumbnail preparation across repeated file selections; full-image WebP optimization must not start until the thumbnail queue has settled.
+- Newly added images are immediately exportable using original bytes after thumbnail preparation finishes.
 - Allow a generated OneFile Album HTML to be loaded back into the editor.
 - Re-edit import restores embedded images, chapters, comments, album title, viewer options, favicon, and editor settings when present.
 - Support the stable v1.0.0 generated-album format.
@@ -52,6 +53,7 @@ After at least one image exists, a compact current-album summary shows image cou
 - WebP quality range: 45–95, default 82.
 - Preserve aspect ratio when resizing.
 - Process full images sequentially and release decoded resources after each item.
+- Never overlap thumbnail decoding with full-image WebP conversion; optimization waits for all queued thumbnail work before decoding full images.
 - Selecting WebP or changing its settings marks optimization as pending while preserving the ability to export originals after explicit confirmation.
 
 ### Ordering, chapters, and comments
@@ -82,6 +84,8 @@ After at least one image exists, a compact current-album summary shows image cou
 - Provide a final viewer preview using the same generated viewer markup/data as the actual export.
 
 ### Generated viewer
+- Keep provenance/help information behind a standard **info (i) toolbar button** instead of a persistent credit bar. The info panel links to Browser Kitty (OneFile Album), explains how to re-edit a saved album, notes offline behavior and sharing, and shows the HTML creation time.
+- On narrow mobile screens, hide dedicated zoom +/- toolbar buttons because pinch/double-tap remain available, reducing top-bar clutter.
 
 - One-file offline operation with restrictive CSP and `connect-src 'none'`.
 - Responsive thumbnail navigation.
@@ -128,6 +132,7 @@ After at least one image exists, a compact current-album summary shows image cou
 - Destructive controls are red and use confirmation for bulk / clear actions.
 - Motion respects `prefers-reduced-motion`.
 - Progress / status uses live regions where appropriate.
+- When at least one image is loaded or processing is active, browser back / reload / tab close triggers the browser's native unsaved-work confirmation because the editing session is memory-only.
 
 ## 8. Browser target
 
@@ -136,7 +141,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ## 9. Non-goals
 
 - Cloud albums, accounts, upload / sharing links, or server-side processing.
-- HEIC / HEIF decoding in v1.0.0.
+- HEIC / HEIF decoding in v1.0.1.
 - Image retouching, cropping, or annotations.
 - Guaranteed animation preservation when WebP optimization is selected.
 - Very large archival collections that are better represented by multiple output albums.
