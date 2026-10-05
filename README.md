@@ -96,7 +96,7 @@ The generated HTML contains both the image payloads and the viewer. It works wit
 The viewer includes:
 
 - Thumbnail navigation and previous / next buttons
-- Keyboard left / right navigation
+- Keyboard left / right navigation and Home / End jumps to the first / last search result
 - Touch swipe navigation while not zoomed
 - Zoom buttons, double-click zoom, pinch zoom, and pan while zoomed
 - Fullscreen with optional automatic control-bar hiding
@@ -110,11 +110,16 @@ The viewer includes:
 | Shortcut | Action |
 | --- | --- |
 | `←` / `→` | Previous / next image |
+| `Home` / `End` | First / last image in the current search results, or the whole album |
 | `+` / `-` | Zoom in / out |
 | `0` | Reset view |
 | `Space` | Start / stop slideshow |
 | `Ctrl` / `⌘` + `S` | Save the current embedded image |
 | `Esc` | Close the active search field or dialog where applicable |
+
+Home / End works without modifier keys, outside editable fields and dialogs. It preserves zoom when already on the requested image. Search with no matches leaves the current image unchanged. Manual navigation keeps the current slideshow running. Interrupted touch gestures do not advance the album.
+
+Previously exported albums contain their own viewer: open the saved HTML in the updated editor and create it again to get these changes.
 
 ## Large HTML files
 
@@ -165,7 +170,7 @@ Each push to `main` runs the repository checks, rebuilds the standalone HTML, ve
 
 ### Build locally
 
-Repository validation requires PowerShell and Node.js 22 or newer. Run `scripts/check-repository.ps1` to build both variants and run the dependency-free export ownership tests against source, readable, tracked-root, and decompressed self-extract HTML. These controlled Node tests do not substitute for interactive browser validation. Custom `-OutputPath` builds leave the tracked root unchanged.
+Repository validation requires PowerShell and Node.js 22 or newer. Run `scripts/check-repository.ps1` to build both variants and run the dependency-free export ownership and generated-viewer navigation tests against source, readable, tracked-root, and decompressed self-extract HTML. These controlled Node tests do not substitute for interactive browser validation. Custom `-OutputPath` builds leave the tracked root unchanged.
 
 Run:
 

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add search-aware Home / End navigation to the generated viewer, with editable-field, dialog, composition, and modifier guards and localized help.
+- Prevent cancelled touch/pointer gestures from navigating images; reset pinch and remaining-pointer baselines for safe continued interaction.
+- Run generated-viewer navigation regressions against source, readable, tracked-root, and restored self-extract variants. Existing saved albums require re-export to receive viewer changes.
+
 - Give HTML export and final preview an owned, immutable image/order/options snapshot and reject stale async completions after editing or source replacement.
 - Keep editing available during generation; cancel the outdated request with a localized message and clear obsolete final previews.
 - Prevent duplicate starts during confirmation, preserve failure/success status, and clean up preview/download URLs on failure or close.

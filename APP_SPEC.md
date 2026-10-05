@@ -94,8 +94,10 @@ After at least one image exists, a compact current-album summary shows image cou
 
 - One-file offline operation with restrictive CSP and `connect-src 'none'`.
 - Responsive thumbnail navigation.
-- Previous / next buttons and keyboard left/right navigation.
-- Touch swipe navigation while not zoomed.
+- Previous / next buttons and keyboard left/right navigation. Unmodified Home / End jumps to the first / last image in the current search results (or whole album without a search).
+- Home / End ignores editable controls/contenteditable, open settings/info dialogs, composition, modifiers, and already-handled events. No results is a no-op; a singleton or already-selected boundary preserves zoom/pan. Actual moves use the normal viewer update path and retain the running slideshow.
+- Viewer keyboard help is available in Japanese and English in the info panel. Previously exported albums keep their embedded viewer until re-imported and exported again.
+- Touch swipe navigation while not zoomed. A cancelled pointer cleans up gesture state without changing images, resets pinch geometry, and re-bases a remaining pointer; a completed swipe retains its existing behavior.
 - Zoom buttons, double-click zoom, two-pointer pinch zoom, and one-pointer pan when zoomed.
 - Fullscreen hides thumbnail navigation and can auto-hide the top control bar until pointer/touch activity.
 - Download / extract the currently displayed full image using the embedded MIME type and extension.
