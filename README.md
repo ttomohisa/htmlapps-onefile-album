@@ -60,6 +60,8 @@ The shortest path is **Add images → Create HTML**. Optimization and organizati
 4. **Album settings (optional)** — Set the album title, choose or create a favicon, and configure the generated viewer.
 5. **Create HTML** — Follow the simplified **filename → size check → save** flow. Final preview is a secondary action when it is useful.
 
+You can keep editing while HTML is being created. Changing images, order, comments, or settings stops the outdated creation; run Create HTML or Final preview again after editing. Existing final previews close when their album changes. A cancelled confirmation or failed generation can be retried.
+
 On mobile, the same five stages are available as fixed bottom tabs: **Add / Optimize / Organize / Album / Export**. If images are loaded, going back, reloading, or closing the tab triggers the browser's unsaved-work confirmation because the edit session is held in memory. Card sorting starts with a short long-press so a normal vertical swipe can still scroll the page.
 
 ### Re-edit a saved album
@@ -163,6 +165,8 @@ Each push to `main` runs the repository checks, rebuilds the standalone HTML, ve
 
 ### Build locally
 
+Repository validation requires PowerShell and Node.js 22 or newer. Run `scripts/check-repository.ps1` to build both variants and run the dependency-free export ownership tests against source, readable, tracked-root, and decompressed self-extract HTML. These controlled Node tests do not substitute for interactive browser validation. Custom `-OutputPath` builds leave the tracked root unchanged.
+
 Run:
 
 ```bat
@@ -174,7 +178,7 @@ The build process:
 - Loads application metadata from `app.config.json`
 - Embeds configured assets from `dependencies.json` when dependencies are present
 - Replaces build placeholders in `src/index.template.html`
-- Generates `dist/index.html`
+- Generates `dist/index.html` and synchronizes the tracked `onefile-album.html` entry point on a default build
 - Verifies standalone / offline requirements
 - Generates the smaller `dist/index.self-extract.html`
 - Writes build-size and dependency manifests under `dist/`

@@ -82,6 +82,11 @@ After at least one image exists, a compact current-album summary shows image cou
 - Estimate includes Base64 overhead, thumbnails, HTML/CSS/JS, and favicon data.
 - For estimates above 250 MB, require confirmation and recommend splitting.
 - Provide a final viewer preview using the same generated viewer markup/data as the actual export.
+- Export and final preview capture their own image order, Blob references, metadata, options, and sanitized filename before asynchronous work or confirmation.
+- Editing remains available during generation. An image, ordering, chapter/comment, title, filename, language, processing setting, or favicon change cancels the outdated request; new images or a replacement album also cancel it. Do not download, open a stale preview, or show success for that request.
+- Export/preview share one busy owner, including confirmation dialogs. A cancelled or failed owner releases only its own state, and cannot finish or unlock a newer request.
+- Reading a replacement album blocks new export/preview and optimization attempts until it settles. A newer replacement or source-generation change rejects the older import; an old import cannot release a newer import’s pending state.
+- Closing a final preview, editing its album, replacing the source, or leaving the page clears its iframe and revokes its Blob URL. Failure leaves a visible message and allows retry.
 
 ### Generated viewer
 - Keep provenance/help information behind a standard **info (i) toolbar button** instead of a persistent credit bar. The info panel links to Browser Kitty (OneFile Album), explains how to re-edit a saved album, notes offline behavior and sharing, and shows the HTML creation time.

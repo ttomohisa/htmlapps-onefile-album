@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Give HTML export and final preview an owned, immutable image/order/options snapshot and reject stale async completions after editing or source replacement.
+- Keep editing available during generation; cancel the outdated request with a localized message and clear obsolete final previews.
+- Prevent duplicate starts during confirmation, preserve failure/success status, and clean up preview/download URLs on failure or close.
+- Add byte-exact PNG export/import and lifecycle regressions across source and both generated variants; default builds synchronize the tracked root HTML.
+
 ## 1.0.1 - 2026-08-25
 
 ### Release polish

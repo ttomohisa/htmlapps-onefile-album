@@ -91,3 +91,9 @@ Keep source in one HTML while it remains understandable. When an app grows subst
 - No runtime external resource.
 - Clear state ownership.
 - A build that fails on missing input.
+
+## Album generation ownership
+
+`runViewer` owns one export/preview transaction from confirmation through publication. Its frozen snapshot copies output metadata, order, viewer options, filename, and immutable Blob references. Existing source generations plus current snapshot comparisons guard each asynchronous boundary, including callbacks that do not increment the source generation. Rendering and saved-setting commit points invalidate obsolete work and completed previews. Old `finally` blocks release only their matching owner.
+
+The default builder synchronizes `onefile-album.html` from its verified readable output. Custom output builds do not overwrite it. Repository checks run the same dependency-free Node regression suite against source, readable, tracked-root, and gzip-restored HTML, then check artifact parity and JavaScript parsing. Native browser rendering and FileReader/download behavior still require separate interactive verification.
