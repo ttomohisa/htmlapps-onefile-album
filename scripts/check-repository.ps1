@@ -152,6 +152,8 @@ try {
     $env:ALBUM_HTML = Join-Path $Root $relative
     & node --test (Join-Path $Root "tests/export-ownership.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Export ownership regression tests failed: $relative" }
+    & node --test (Join-Path $Root "tests/viewer-navigation.test.cjs")
+    if ($LASTEXITCODE -ne 0) { throw "Viewer navigation regression tests failed: $relative" }
   }
 } finally {
   $env:ALBUM_HTML = $previousAlbumHtml
