@@ -142,4 +142,21 @@ $buildArguments = @{}
 if ($ForceDownload) { $buildArguments.ForceDownload = $true }
 & (Join-Path $Root "build-standalone.ps1") @buildArguments
 
+# Native Blob and the Node test runner are used only for development checks.
+if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw "Node.js 22 or newer is required for regression tests." }
+& node -e "if (Number(process.versions.node.split('.')[0]) < 22) process.exit(1)"
+if ($LASTEXITCODE -ne 0) { throw "Node.js 22 or newer is required for regression tests." }
+$previousAlbumHtml = $env:ALBUM_HTML
+try {
+  foreach ($relative in @("src/index.template.html", "dist/index.html", "onefile-album.html", "dist/index.self-extract.html")) {
+    $env:ALBUM_HTML = Join-Path $Root $relative
+    & node --test (Join-Path $Root "tests/export-ownership.test.cjs")
+    if ($LASTEXITCODE -ne 0) { throw "Export ownership regression tests failed: $relative" }
+  }
+} finally {
+  $env:ALBUM_HTML = $previousAlbumHtml
+}
+& node --test (Join-Path $Root "tests/release-parity.test.cjs")
+if ($LASTEXITCODE -ne 0) { throw "Release parity checks failed." }
+
 Write-Host "[OK] Repository check passed." -ForegroundColor Green
