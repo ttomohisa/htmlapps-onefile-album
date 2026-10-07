@@ -129,6 +129,8 @@ After at least one image exists, a compact current-album summary shows image cou
 
 ## 7. UX and accessibility
 
+- Header language switching shows the target language as `EN` in Japanese and `JA` in English, with localized aria-label/title (`英語に切り替え` / `Switch to Japanese`). The visible `vX.Y.Z` badge matches `app.config.json`; privacy remains `完全ローカル処理` / `Fully local processing`.
+
 - Mobile-first from 320 px upward.
 - Desktop uses a visible five-step journey navigation.
 - At widths up to 680 px, mobile uses fixed bottom tabs: Add, Optimize, Organize, Album, Export.
@@ -148,7 +150,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ## 9. Non-goals
 
 - Cloud albums, accounts, upload / sharing links, or server-side processing.
-- HEIC / HEIF decoding in v1.0.1.
+- HEIC / HEIF decoding in v1.0.2.
 - Image retouching, cropping, or annotations.
 - Guaranteed animation preservation when WebP optimization is selected.
 - Very large archival collections that are better represented by multiple output albums.

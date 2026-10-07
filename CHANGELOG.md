@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Standardize header target-language labels to EN / JA with localized accessible names and tooltips, and synchronize the visible version badge with v1.0.2.
+
 - Add search-aware Home / End navigation to the generated viewer, with editable-field, dialog, composition, and modifier guards and localized help.
 - Prevent cancelled touch/pointer gestures from navigating images; reset pinch and remaining-pointer baselines for safe continued interaction.
 - Run generated-viewer navigation regressions against source, readable, tracked-root, and restored self-extract variants. Existing saved albums require re-export to receive viewer changes.

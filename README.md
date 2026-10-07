@@ -200,7 +200,7 @@ Saved viewer preferences may use browser-local storage when available, but sourc
 
 ## Limitations
 
-- Input formats in v1.0.1 are JPEG / PNG / WebP.
+- Input formats in v1.0.2 are JPEG / PNG / WebP.
 - HEIC / HEIF is not supported.
 - Animated images may be treated as still images when WebP optimization is used.
 - WebP optimization re-encodes the image and does not preserve original EXIF / GPS metadata.
@@ -210,7 +210,7 @@ Saved viewer preferences may use browser-local storage when available, but sourc
 
 ## Dependencies
 
-OneFile Album v1.0.1 has **no bundled third-party runtime library dependency**. Browser APIs and system fonts are used directly.
+OneFile Album v1.0.2 has **no bundled third-party runtime library dependency**. Browser APIs and system fonts are used directly.
 
 Drag and drop is implemented with Pointer Events and does not require a drag library. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for repository policy and notices.
 
