@@ -150,6 +150,8 @@ $previousAlbumHtml = $env:ALBUM_HTML
 try {
   foreach ($relative in @("src/index.template.html", "dist/index.html", "onefile-album.html", "dist/index.self-extract.html")) {
     $env:ALBUM_HTML = Join-Path $Root $relative
+    & node --test (Join-Path $Root "tests/header.test.cjs")
+    if ($LASTEXITCODE -ne 0) { throw "Header regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/export-ownership.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Export ownership regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/viewer-navigation.test.cjs")
