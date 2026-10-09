@@ -150,7 +150,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ## 9. Non-goals
 
 - Cloud albums, accounts, upload / sharing links, or server-side processing.
-- HEIC / HEIF decoding in v1.0.2.
+- HEIC / HEIF decoding in v1.0.3.
 - Image retouching, cropping, or annotations.
 - Guaranteed animation preservation when WebP optimization is selected.
 - Very large archival collections that are better represented by multiple output albums.
@@ -170,3 +170,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 - Final preview uses the generated viewer before export.
 - Generated viewer supports previous / next, keyboard navigation, swipe, pinch zoom / pan, fullscreen, slideshow, settings, and image extraction.
 - Japanese and English layouts fit at 360 px width.
+
+## Brand icon consistency
+
+- Brand backgrounds use #16624f with corner radii equal to exactly 25% of each background axis. Preserve foreground artwork, placement, and existing canvas padding across SVG assets, app headers, and embedded favicons.

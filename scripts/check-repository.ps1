@@ -164,3 +164,6 @@ try {
 if ($LASTEXITCODE -ne 0) { throw "Release parity checks failed." }
 
 Write-Host "[OK] Repository check passed." -ForegroundColor Green
+
+& node --test (Join-Path $Root "tests/icon-brand.test.cjs")
+if ($LASTEXITCODE -ne 0) { throw "Brand icon regression failed." }

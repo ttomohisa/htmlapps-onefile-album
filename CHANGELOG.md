@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2026-10-09
+
+- Normalize brand icon backgrounds to #16624f with exact 25% corner radii across SVG assets, header icons, and embedded favicons, preserving existing artwork.
+- Add focused brand representation regression checks.
+
 ## Unreleased
 
 - Standardize header target-language labels to EN / JA with localized accessible names and tooltips, and synchronize the visible version badge with v1.0.2.
