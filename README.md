@@ -223,3 +223,11 @@ Bug reports and feature proposals are welcome through GitHub Issues. See [CONTRI
 Copyright © 2026 ttomohisa
 
 Licensed under the [MIT License](LICENSE).
+
+### Help scrolling
+
+While Help is open, scroll inside Help; closing it restores normal page scrolling.
+
+### Focus after editing
+
+Saving a comment or chapter returns keyboard focus to its visible action. Removing an image moves focus to the next remaining image action, or a preceding one. If unavailable, and after Clear, focus prefers the current visible mobile tab, then the image input, without switching panels; the browser can scroll the focused control into view. A newer dialog or focused control keeps focus. Cancel/Escape and the existing five-second Remove/Clear Undo remain unchanged.

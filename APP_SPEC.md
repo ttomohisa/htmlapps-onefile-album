@@ -137,6 +137,8 @@ After at least one image exists, a compact current-album summary shows image cou
 - Only the active mobile workflow panel is displayed.
 - After adding files, visibly acknowledge success and point to the fast path and optional next steps.
 - Controls have visible labels or accessible names and keyboard focus is visible.
+- Saving a comment or an edited chapter restores focus to the corresponding rebuilt action when visible. Per-image removal tries the next surviving image action, then a preceding one. Clear and unavailable item actions prefer the currently selected visible mobile tab, then a visible image file input; this does not change workflow panels. Normal native focus may scroll the destination into view.
+- Focus repair runs only for the initiating action, skips hidden/disconnected/disabled/inert targets, and preserves a newer modal or usable focus owner. Native dialog cancellation and Escape behavior remain unchanged; per-image removal and Clear retain their existing five-second Undo data behavior.
 - Selection state is visually obvious and screen-reader accessible.
 - Destructive controls are red and use confirmation for bulk / clear actions.
 - Motion respects `prefers-reduced-motion`.
@@ -174,3 +176,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ## Brand icon consistency
 
 - Brand backgrounds use #16624f with corner radii equal to exactly 25% of each background axis. Preserve foreground artwork, placement, and existing canvas padding across SVG assets, app headers, and embedded favicons.
+
+### Help scrolling
+
+Opening modal Help locks background page scrolling. Its existing scrollable body, close controls and focus restoration remain available; closing Help restores normal page scrolling.
