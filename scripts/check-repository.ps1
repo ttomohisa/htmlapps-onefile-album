@@ -154,6 +154,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Help scroll regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/header.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Header regression tests failed: $relative" }
+    & node --test (Join-Path $Root "tests/editor-action-focus.test.cjs")
+    if ($LASTEXITCODE -ne 0) { throw "Editor action focus regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/export-ownership.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Export ownership regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/viewer-navigation.test.cjs")

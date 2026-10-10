@@ -50,7 +50,7 @@ function harness() {
     decodeBase64Bytes:s=>Buffer.from(s,'base64'),
     blobBase64:async blob=>{readCount++;const gate=block;block=null;if(gate)await gate.promise;if(ctx.failRead)throw Error('read failed');return Buffer.from(await blob.arrayBuffer()).toString('base64');}
   });
-  const names=['formatBytes','escapeHtml','safeJson','safeNameBase','viewerMeta','viewerHead','viewerTail','buildViewerBlob','estimatedHtmlBytes',
+  const names=['captureEditorFocus','visibleEditorFocusTarget','restoreEditorFocus','formatBytes','escapeHtml','safeJson','safeNameBase','viewerMeta','viewerHead','viewerTail','buildViewerBlob','estimatedHtmlBytes',
     'exportViewer','previewViewer','autoSortItems','splitChapterSegments','removeIdsPreservingChapters','removeItem','removeSelected','clearAll',
     'quoteGeneratedKeys','isWebpPending','sizeLevel','saveComment','deleteComment','saveChapter','deleteChapter','saveSettings','invalidateConversions',
     'revokeOutput','prepareOriginal','blobFromBase64','clampCustomDimension','importAlbumFile','revokeItemUrls',

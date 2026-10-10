@@ -2,6 +2,9 @@
 
 ## 1.0.4 - 2026-10-10
 
+- Restore usable keyboard focus after saving comments/chapters, removing an image, or clearing an album, without changing mobile panels or taking focus from a newer dialog/control.
+- Cover loaded-editor action focus, cancellation, unavailable targets, and unchanged five-second Undo data behavior with production-handler regressions.
+
 - Keep the background page in place while Help is open, preserving its existing internal scrolling and close behavior.
 - Add Help-only modal scroll contracts across the source and generated HTML variants.
 
