@@ -172,3 +172,14 @@ test('in-app Help explains action focus fallback in Japanese and English',()=>{
   assert.match(source,/helpActionFocus:'コメント・章の保存後は/);
   assert.match(source,/helpActionFocus:'After saving a comment or chapter,/);
 });
+
+// A rendered file input can still be covered by the sticky header on a short
+// mobile viewport. The persistent selected tab is the mobile fallback first.
+for(const action of ['comment','chapter','remove','clear'])test(`${action} prefers a visible current mobile tab even when the file input is rendered`,async()=>{
+  const h=harness();h.$('[data-mobile-tab][aria-current="page"]').hidden=false;
+  if(action==='comment')h.editComment();if(action==='chapter')h.editChapter();if(action==='remove')h.$(remove(1)).focus();
+  h.afterRender(()=>{for(const [key,node] of h.nodes)if(key.startsWith('[data-item-id=')||key.startsWith('[data-chapter-item-id='))node.hidden=true;});
+  if(action==='comment')h.ctx.saveComment();if(action==='chapter')h.ctx.saveChapter();if(action==='remove')h.ctx.removeItem(1);if(action==='clear')await h.clear();
+  assert.equal(h.focusKey(),'[data-mobile-tab][aria-current="page"]');
+  assert.equal(h.$('#fileInput').focusCalls.length,0,'the rendered file input must not take focus before the visible mobile tab');
+});

@@ -137,7 +137,7 @@ After at least one image exists, a compact current-album summary shows image cou
 - Only the active mobile workflow panel is displayed.
 - After adding files, visibly acknowledge success and point to the fast path and optional next steps.
 - Controls have visible labels or accessible names and keyboard focus is visible.
-- Saving a comment or an edited chapter restores focus to the corresponding rebuilt action when visible. Per-image removal tries the next surviving image action, then a preceding one. Clear and unavailable item actions fall back to a visible image file input or the currently selected visible mobile tab; this does not change workflow panels. Normal native focus may scroll the destination into view.
+- Saving a comment or an edited chapter restores focus to the corresponding rebuilt action when visible. Per-image removal tries the next surviving image action, then a preceding one. Clear and unavailable item actions prefer the currently selected visible mobile tab, then a visible image file input; this does not change workflow panels. Normal native focus may scroll the destination into view.
 - Focus repair runs only for the initiating action, skips hidden/disconnected/disabled/inert targets, and preserves a newer modal or usable focus owner. Native dialog cancellation and Escape behavior remain unchanged; per-image removal and Clear retain their existing five-second Undo data behavior.
 - Selection state is visually obvious and screen-reader accessible.
 - Destructive controls are red and use confirmation for bulk / clear actions.
