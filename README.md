@@ -223,3 +223,7 @@ Bug reports and feature proposals are welcome through GitHub Issues. See [CONTRI
 Copyright © 2026 ttomohisa
 
 Licensed under the [MIT License](LICENSE).
+
+### Help scrolling
+
+While Help is open, scroll inside Help; closing it restores normal page scrolling.

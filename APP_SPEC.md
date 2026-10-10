@@ -174,3 +174,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ## Brand icon consistency
 
 - Brand backgrounds use #16624f with corner radii equal to exactly 25% of each background axis. Preserve foreground artwork, placement, and existing canvas padding across SVG assets, app headers, and embedded favicons.
+
+### Help scrolling
+
+Opening modal Help locks background page scrolling. Its existing scrollable body, close controls and focus restoration remain available; closing Help restores normal page scrolling.
