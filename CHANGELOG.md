@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Clarify Japanese and English help by removing internal layout, implementation, and audit commentary while preserving usage guidance and cautions.
+
 ## 1.0.4 - 2026-10-10
 
 - Restore usable keyboard focus after saving comments/chapters, removing an image, or clearing an album, preferring the current visible mobile tab for fallback on short screens without changing panels or taking focus from a newer dialog/control.
