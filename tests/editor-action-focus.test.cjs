@@ -166,11 +166,11 @@ test('Clear Escape retains its trigger and data',async()=>{
   const h=harness(),before=h.data();h.$('#clearAllButton').focus();const work=h.ctx.clearAll();h.flush();h.$('#appConfirmDialog').emit('cancel');await work;assert.equal(h.focusKey(),'#clearAllButton');assert.deepEqual(h.data(),before);
 });
 
-test('in-app Help explains action focus fallback in Japanese and English',()=>{
+test('Help omits internal layout and focus audit prose',()=>{
   const help=source.split('APP:HELP:BEGIN')[1].split('APP:HELP:END')[0];
-  assert.match(help,/data-i18n="helpActionFocus"/);
-  assert.match(source,/helpActionFocus:'コメント・章の保存後は/);
-  assert.match(source,/helpActionFocus:'After saving a comment or chapter,/);
+  assert.doesNotMatch(help,/data-i18n="helpActionFocus"/);
+  assert.doesNotMatch(source,/helpActionFocus:'コメント・章の保存後は/);
+  assert.doesNotMatch(source,/helpActionFocus:'After saving a comment or chapter,/);
 });
 
 // A rendered file input can still be covered by the sticky header on a short
