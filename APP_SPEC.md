@@ -180,3 +180,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari. Direct `file://
 ### Help scrolling
 
 Opening modal Help locks background page scrolling. Its existing scrollable body, close controls and focus restoration remain available; closing Help restores normal page scrolling.
+
+## Build information placement
+
+Keep existing build metadata at the very end of How to use & Notes, not the main page. Preserve the existing smartphone footer breakpoint and any existing mobile build hiding. Native disclosure keyboard activation must not dismiss Help.

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Move build information to the end of Help while preserving existing smartphone visibility.
+- Keep the Help header and close button visible while scrolling expanded build information.
 - Clarify Japanese and English help by removing internal layout, implementation, and audit commentary while preserving usage guidance and cautions.
 
 ## 1.0.4 - 2026-10-10
