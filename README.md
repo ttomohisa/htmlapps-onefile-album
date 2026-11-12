@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://browser-kitty.com/tools/onefile-album/)
+[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
 [日本語版 README](README.ja.md)
 
@@ -10,11 +10,11 @@ A privacy-focused, single-HTML app that packages multiple local images together 
 
 ## 🚀 Live demo
 
-### [Open OneFile Album on Browser Kitty](https://browser-kitty.com/tools/onefile-album/)
+### [Open OneFile Album on GitHub Pages](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
-Browser Kitty delivers only the initial application HTML. After it loads, image reading, WebP optimization, sorting, chapters, comments, preview, album generation, and saved-album re-editing are processed locally on your device. The images you select are not uploaded by the app.
+GitHub Pages serves the initial application HTML. After it loads, image reading, WebP optimization, sorting, chapters, comments, preview, album generation, and saved-album re-editing are processed locally on your device. The images you select are not uploaded by the app.
 
-[![OneFile Album screenshot](assets/screenshot-en.png)](https://browser-kitty.com/tools/onefile-album/)
+[![OneFile Album screenshot](assets/screenshot-en.png)](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
 ## Features
 
@@ -35,7 +35,7 @@ Browser Kitty delivers only the initial application HTML. After it loads, image 
 
 ### Use the web demo
 
-Just [open the demo](https://browser-kitty.com/tools/onefile-album/). No installation or account is required.
+Just [open the demo](https://ttomohisa.github.io/htmlapps-onefile-album/). No installation or account is required.
 
 ### Use the download file
 
@@ -147,7 +147,7 @@ The repository includes a workflow that builds the standalone HTML, verifies it,
 1. Push the repository to GitHub as `htmlapps-onefile-album`.
 2. Open **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**.
 3. Push to `main`, or manually run **Deploy standalone app to GitHub Pages** from the Actions tab.
-4. GitHub Pages publishes this repository's `dist`. The production Browser Kitty entry point is [OneFile Album](https://browser-kitty.com/tools/onefile-album/).
+4. GitHub Pages publishes this repository's `dist` at [OneFile Album](https://ttomohisa.github.io/htmlapps-onefile-album/).
 
 Each push to `main` runs the repository checks, rebuilds the standalone HTML, verifies offline constraints, and publishes the `dist` directory when GitHub Pages is enabled.
 
@@ -200,7 +200,7 @@ The current `dependencies.json` contains no runtime third-party libraries, so On
 
 The generated application and generated albums use a Content Security Policy containing `connect-src 'none'`. Selected image data stays in browser memory and is not uploaded by the application.
 
-The Browser Kitty hosted version requires the initial HTML request to load the app, but image processing and album creation are local. For use with the network completely disconnected, open `dist/index.html` locally.
+The GitHub Pages version requires the initial HTML request to load the app, but image processing and album creation are local. For use with the network completely disconnected, open `dist/index.html` locally.
 
 Saved viewer preferences may use browser-local storage when available, but source image bytes are not persisted there by the editor.
 

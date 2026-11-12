@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ttomohisa/htmlapps-onefile-album/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://browser-kitty.com/tools/onefile-album/)
+[![Single HTML](https://img.shields.io/badge/distribution-single%20HTML-0ea5e9)](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
 [English README](README.md)
 
@@ -10,11 +10,11 @@
 
 ## 🚀 デモ
 
-### [Browser KittyでOneFile Albumを開く](https://browser-kitty.com/tools/onefile-album/)
+### [GitHub PagesでOneFile Albumを開く](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
-Browser Kittyから最初のアプリHTMLを読み込んだ後、画像の読み込み、WebP軽量化、並び替え、章・コメント編集、完成プレビュー、HTML生成、保存済みアルバムの再編集は端末内で処理されます。選択した画像がアプリからサーバーへアップロードされることはありません。
+GitHub Pagesから最初のアプリHTMLを読み込んだ後、画像の読み込み、WebP軽量化、並び替え、章・コメント編集、完成プレビュー、HTML生成、保存済みアルバムの再編集は端末内で処理されます。選択した画像がアプリからサーバーへアップロードされることはありません。
 
-[![OneFile Albumの画面](assets/screenshot.png)](https://browser-kitty.com/tools/onefile-album/)
+[![OneFile Albumの画面](assets/screenshot.png)](https://ttomohisa.github.io/htmlapps-onefile-album/)
 
 ## 主な機能
 
@@ -35,7 +35,7 @@ Browser Kittyから最初のアプリHTMLを読み込んだ後、画像の読み
 
 ### Webで使う
 
-[デモを開く](https://browser-kitty.com/tools/onefile-album/)だけで利用できます。インストールやアカウント登録は不要です。
+[デモを開く](https://ttomohisa.github.io/htmlapps-onefile-album/)だけで利用できます。インストールやアカウント登録は不要です。
 
 ### ダウンロードして使う
 
@@ -149,7 +149,7 @@ OneFile Albumでは絶対上限ではなく、実用上の目安を表示しま�
 1. リポジトリ名を `htmlapps-onefile-album` としてGitHubへプッシュします。
 2. **Settings → Pages → Build and deployment → Source** で **GitHub Actions** を選択します。
 3. `main` ブランチへプッシュするか、Actions画面から **Deploy standalone app to GitHub Pages** を手動実行します。
-4. GitHub Pages側にはこのリポジトリの `dist` が公開されます。Browser Kittyでの公開先は [OneFile Album](https://browser-kitty.com/tools/onefile-album/) です。
+4. このリポジトリの `dist` はGitHub Pagesの [OneFile Album](https://ttomohisa.github.io/htmlapps-onefile-album/) に公開されます。
 
 `main` へのプッシュ時には、リポジトリ検証、単一HTMLの再ビルド、オフライン要件の検査を行い、GitHub Pagesが有効な場合に `dist` を公開します。
 
@@ -198,7 +198,7 @@ build-standalone.bat
 
 生成されたアプリ本体と生成アルバムは、`connect-src 'none'` を含むContent Security Policyを使用します。選択した画像データはブラウザーのメモリ上で処理され、アプリからアップロードされません。
 
-Browser Kittyの公開版ではアプリ本体を開くための最初のHTML配信は発生しますが、画像処理とアルバム生成は端末内です。ネットワークを完全に切って使う場合は `dist/index.html` をローカルで開いてください。
+GitHub Pagesの公開版ではアプリ本体を開くための最初のHTML配信は発生しますが、画像処理とアルバム生成は端末内です。ネットワークを完全に切って使う場合は `dist/index.html` をローカルで開いてください。
 
 ビューア設定など一部のUI設定は利用可能な場合にブラウザーのローカルストレージへ保存されますが、編集側が元画像バイト列をそこへ永続保存することはありません。
 
