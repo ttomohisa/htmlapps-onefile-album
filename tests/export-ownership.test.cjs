@@ -38,7 +38,7 @@ function harness() {
     faviconChoice:'album',faviconCustomData:'',settingsKey:'test', $, getProcessingMode:()=>ctx.mode, mode:'original',
     currentFaviconData:()=>ctx.favicon, favicon:'data:image/svg+xml,%3Csvg/%3E', t:key=>key,
     renderAll:refresh,renderList:refresh,renderCard:refresh,renderFaviconPicker:refresh,updateJourneyUi(){},updateStatus(){},readyProcessingStatus:()=>'',
-    writeStorage(){},syncDimensionUi(){},syncProcessingModeUi(){},renderAddedFeedback(){},navigateToPhase(){},
+    writeStorage(){},syncDimensionUi(){},syncProcessingModeUi(){},renderAddedFeedback(){},navigateToPhase(page){ctx.lastStage=page;},
     closeCommentDialog(){},closeChapterDialog(){},AppToast:{show(v){toasts.push(v)}},
     AppConfirm:{ask:async()=> confirm ? confirm.promise : true},
     setTimeout(fn,delay){if(delay===0)return setTimeout(fn,0);timers.push(fn);return timers.length;},clearTimeout(){},
@@ -56,7 +56,7 @@ function harness() {
     'revokeOutput','prepareOriginal','blobFromBase64','clampCustomDimension','importAlbumFile','revokeItemUrls',
     'setViewerStatus','viewerOptionsKey','captureViewerSnapshot','isViewerSnapshotCurrent','isViewerJobCurrent','closeCompletionPreview','invalidateViewerOutput',
     'refreshViewerState','runViewer'];
-  for(const n of names) {const line=lines.find(l=>new RegExp('(?:async )?function '+n+'\\(').test(l));if(line)vm.runInContext(line.trim(),ctx);}
+  for(const n of names) {const line=n==='viewerTail'?source.slice(source.indexOf('function viewerTail()'),source.indexOf('function viewerMeta()')):lines.find(l=>new RegExp('(?:async )?function '+n+'\\(').test(l));if(line)vm.runInContext(line.trim(),ctx);}
   // Run the actual settings and preview close/pagehide registrations.
   for(const marker of ["$('#autoSortSelect').addEventListener", "$('#convertButton').addEventListener", "window.addEventListener('beforeunload'"]){
     const line=lines.find(l=>l.trim().startsWith(marker)); if(line) {
@@ -170,7 +170,7 @@ test('normal preview matches export and import round-trips the preserved PNGs',a
   const h=harness();assert.equal(await h.ctx.exportViewer(),true);const saved=h.downloads[0];assert.equal(await h.ctx.previewViewer(),true);
   const exported=await parse(h,saved.blob),previewed=await parse(h,h.urls.get(h.ctx.completionPreviewUrl));
   assert.deepEqual(JSON.parse(JSON.stringify(exported.data)),JSON.parse(JSON.stringify(previewed.data)));
-  await h.ctx.importAlbumFile({name:'round-trip.html',text:()=>saved.blob.text()});assert.equal(h.errors.length,0);
+  await h.ctx.importAlbumFile({name:'round-trip.html',text:()=>saved.blob.text()});assert.equal(h.errors.length,0);assert.equal(h.ctx.lastStage,'optimize','reopening an album returns to the image-size choice');
   assert.equal(h.ctx.completionPreviewUrl,'');assert.deepEqual(Array.from(h.ctx.items,x=>x.file.name),['Alpha.png','Beta.png']);
   assert.equal(await h.ctx.exportViewer(),true);const roundTrip=await parse(h,h.downloads[1].blob);assert.equal(roundTrip.data[0].b,tinyPng);assert.equal(roundTrip.data[1].b,tinyPng);
 });
@@ -219,4 +219,17 @@ test('pagehide also rejects a replacement import that finishes later',async()=>{
   const h=harness();await h.ctx.exportViewer();const original=await h.downloads[0].blob.text(),gate=deferred();
   const work=h.ctx.importAlbumFile({name:'later.html',text:()=>gate.promise});h.$('#window').emit('pagehide');gate.resolve(original.replaceAll('Synthetic album','Late album'));await work;
   assert.equal(h.$('#albumTitle').value,'Synthetic album');assert.equal(h.ctx.albumImportJob,null);
+});
+
+test('a corrupt later image releases temporary URLs and leaves the current album intact', async () => {
+  const h = harness();
+  const before = h.ctx.items;
+  h.ctx.decodeBase64Bytes = value => Buffer.from(atob(value), 'binary');
+  const meta = JSON.stringify({title: 'Corrupt replacement'});
+  const images = JSON.stringify([{b: tinyPng, t: tinyPng}, {b: tinyPng, t: '!invalid!'}]);
+  const html = '<script>const M=' + meta + ',D=' + images + ';const marker="onefile-album-viewer:";';
+  await h.ctx.importAlbumFile({name: 'corrupt.html', text: async () => html});
+  assert.equal(h.errors.length, 1);
+  assert.equal(h.ctx.items, before);
+  assert.equal(h.urls.size, 0);
 });

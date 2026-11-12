@@ -11,7 +11,7 @@ The application supports two full-image strategies: preserve source image bytes,
 - Local-first and offline-first.
 - One generated HTML is the portable deliverable.
 - No runtime network access.
-- The shortest successful journey is **Add images → Create HTML**; optimization and organization remain optional.
+- The default journey is **Add images → Choose image size → Check photo order → Album settings → Create HTML**. Image conversion and editing remain optional; keeping defaults still follows the visible sequence.
 - Keep the export goal visible after images are added.
 - Prefer direct-manipulation editing: selection + drag rather than up/down ordering buttons.
 - Avoid decoding every full image at once.
@@ -19,15 +19,15 @@ The application supports two full-image strategies: preserve source image bytes,
 
 ## 3. Main workflow
 
-Desktop exposes five numbered stages. Mobile exposes the same five stages as fixed bottom tabs:
+Desktop and mobile expose one selected work area at a time. Desktop uses five journey buttons; mobile uses fixed bottom tabs. The add-image area remains available above the selected work area:
 
-1. **Add images** — selecting images creates thumbnails and makes original bytes immediately exportable. Users may also open a saved OneFile Album HTML for re-editing. After images are ready, the primary continuation is **Next: Reduce file size**, with **Quick create** as the secondary shortcut.
-2. **Reduce file size (optional)** — expose WebP optimization as an independent step with BEFORE (original images) → AFTER (images in HTML) size comparison, followed by a clear **Next: Order, chapters & comments** action.
+1. **Add images** — selecting images creates thumbnails and makes original bytes immediately exportable. Users may also open a saved OneFile Album HTML for re-editing. After the first thumbnail queue settles successfully, open step 2 (Reduce file size) if the user is still on Add. Do not redirect later additions or override a stage the user deliberately selected during preparation. Shrink the drop zone to a compact 48 px minimum input, hide its illustration/helper text/format chips, and collapse the introduction. Keep a short translated Add images label and the ability to drop or select more files. Add feedback continues to step 2. Do not place export shortcuts in Add, the photo header or the current-album summary. The default path visits all five stages; conversion and edits stay optional.
+2. **Reduce file size (optional)** — expose WebP optimization as an independent step with BEFORE (original images) → AFTER (images in HTML) size comparison, followed by a primary action reflecting the selected mode: **Continue with originals** or **Optimize & continue**. Originals continue immediately if ready. Pending WebP conversion runs before proceeding; failure, replaced input, changed settings or a deliberately selected different stage must not redirect. A secondary **Optimize and check size** action lets users inspect the size comparison before continuing.
 3. **Order, chapters & comments (optional)** — automatic sorting, manual drag ordering, chapter dividers, chapter collapse, and comments.
 4. **Album settings (optional)** — album title, generated-viewer display options, and favicon.
-5. **Create HTML** — present a simple three-part finish flow: output filename, estimated size, then save. Final viewer preview is secondary and hidden while a pending WebP conversion makes it invalid. If WebP optimization is selected but pending, offer **Optimize & create HTML** as the primary action and clearly label the original-image fallback.
+5. **Create HTML** — present the output filename and estimated size, followed by adjacent **Save HTML** and **Preview album** actions. Do not nest numbered 1/2/3 steps inside stage 5. Final viewer preview is secondary and hidden while a pending WebP conversion makes it invalid. If WebP optimization is selected but pending, offer **Optimize & create HTML** as the primary action and clearly label the original-image fallback.
 
-After at least one image exists, a compact current-album summary shows image count and estimated output size and offers direct navigation to optimization or export.
+After at least one image exists, a persistent imported-photo strip shows the loaded count, filenames and up to twelve real thumbnails above the current work area. Keep it visible in steps 2–5; preparing images have named placeholders and cannot open a missing preview. Each ready thumbnail opens the image preview. Show a remaining count for larger albums. Avoid duplicate current-album and export-ready summary bars. Stage actions move keyboard focus into the selected work area; tab navigation keeps focus on the visible tab. Clearing/removing all images restores the full drop zone and introductory copy without removing Undo.
 
 ## 4. Functional requirements
 
@@ -89,8 +89,9 @@ After at least one image exists, a compact current-album summary shows image cou
 - Closing a final preview, editing its album, replacing the source, or leaving the page clears its iframe and revokes its Blob URL. Failure leaves a visible message and allows retry.
 
 ### Generated viewer
-- Keep provenance/help information behind a standard **info (i) toolbar button** instead of a persistent credit bar. The info panel links to Browser Kitty (OneFile Album), explains how to re-edit a saved album, notes offline behavior and sharing, and shows the HTML creation time.
-- On narrow mobile screens, hide dedicated zoom +/- toolbar buttons because pinch/double-tap remain available, reducing top-bar clutter.
+- Keep provenance/help information under **More → About this album** instead of a persistent credit bar or a separate always-visible info button. The info panel links to Browser Kitty (OneFile Album), explains how to re-edit a saved album, notes offline behavior and sharing, and shows the HTML creation time.
+- Keep three toolbar controls with accessible names: **Play/Pause**, **Fullscreen/Exit fullscreen**, and **More**. Put zoom out/in, search, save current image, settings and album info in the More popover on all screen sizes. Preserve pinch/double-tap and keyboard zoom.
+- The More popover closes on outside click, focus leaving it, Escape and resize. Escape restores focus to More. Search and dialogs receive focus appropriately; auto-hide must not conceal open controls. Suppress album navigation shortcuts while the menu is open. Playback labels and pressed state track actual playback. Use a neutral charcoal toolbar with flat controls, and present More at the bottom on narrow screens with 48 px action rows and safe-area padding.
 
 - One-file offline operation with restrictive CSP and `connect-src 'none'`.
 - Responsive thumbnail navigation.
@@ -98,7 +99,8 @@ After at least one image exists, a compact current-album summary shows image cou
 - Home / End ignores editable controls/contenteditable, open settings/info dialogs, composition, modifiers, and already-handled events. No results is a no-op; a singleton or already-selected boundary preserves zoom/pan. Actual moves use the normal viewer update path and retain the running slideshow.
 - Viewer keyboard help is available in Japanese and English in the info panel. Previously exported albums keep their embedded viewer until re-imported and exported again.
 - Touch swipe navigation while not zoomed. A cancelled pointer cleans up gesture state without changing images, resets pinch geometry, and re-bases a remaining pointer; a completed swipe retains its existing behavior.
-- Zoom buttons, double-click zoom, two-pointer pinch zoom, and one-pointer pan when zoomed.
+- On wider screens, a focusable divider resizes the thumbnail panel by drag or arrow keys. Keep the preferred width per album and limit it to half of the available width. On narrow screens the thumbnails stay below the photo. The settings switches show explicit On/Off text and expose their state to assistive technology. Settings scroll to the last item and close on a backdrop click. The background can use a blurred copy of the current photo.
+- Zoom buttons, double-click zoom, two-pointer pinch zoom, and one-pointer pan when zoomed. The toolbar slider controls zoom and reflects other zoom actions. Ctrl + wheel over the image stage zooms around the pointer. Plain wheel scroll remains available.
 - Fullscreen hides thumbnail navigation and can auto-hide the top control bar until pointer/touch activity.
 - Download / extract the currently displayed full image using the embedded MIME type and extension.
 - Keep-originals extraction must be byte-identical to the source full image.
@@ -184,3 +186,26 @@ Opening modal Help locks background page scrolling. Its existing scrollable body
 ## Build information placement
 
 Keep existing build metadata at the very end of How to use & Notes, not the main page. Preserve the existing smartphone footer breakpoint and any existing mobile build hiding. Native disclosure keyboard activation must not dismiss Help.
+
+## Editor visual refinement
+
+- Preserve the green Browser Kitty identity and light-only editor. Use quiet dividers and spacing instead of decorative gradients, overlapping card shadows, and icon tiles.
+- Editor text has an 11 px minimum across desktop, tablet and smartphone breakpoints; primary descriptions use 12–14 px.
+- The image drop area shows visible keyboard focus. Header actions and mobile continuation, re-edit and selection actions have a minimum 44 px height.
+- Preserve all five workflow stages, source and export ownership, translations, reduced-motion support and generated viewer behavior.
+
+### Requested Japanese copy
+
+- Heading: 画像を1つの持ち運べるHTMLアルバムに
+- Lead: 複数画像をビューアごと1つの自己完結HTMLにまとめます
+
+### Guided first use
+
+- First image loading and saved-album reopening both lead to step 2; never automatically skip it. Later image additions preserve the selected stage.
+- Step 3 continues to album settings, and step 4 continues to export, with visible forward actions at desktop and mobile widths. Mobile tabs show the same 1–5 numbering.
+- Keep one primary forward action per stage. Explain image-size choices and album icons in familiar language; advanced format details stay in Help.
+
+### Loaded-photo reassurance and saving
+
+- The loaded-photo strip is independent of step-1 continuation feedback; never hide it when moving automatically to step 2. Keep the input compact.
+- In step 5, describe the final action as Save HTML and group the preview next to it. Keep pending-WebP and large-file warnings and filename editing intact.

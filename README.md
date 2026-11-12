@@ -18,6 +18,10 @@ Browser Kitty delivers only the initial application HTML. After it loads, image 
 
 ## Features
 
+- Verify imported photos with thumbnails and filenames. Saved albums use Play, Fullscreen and More controls. Zoom with the toolbar slider, Ctrl + scroll over the image, or pinch on a touch screen. On a computer, drag the divider to resize the thumbnail panel.
+
+- A quieter light editor with clearer text, visible keyboard focus, and larger mobile actions.
+
 - **Turn many images into one portable album** — Package JPEG / PNG / WebP images together with the viewer into one HTML file that can be opened directly later.
 - **Keep originals or make the album lighter** — Preserve the source image bytes, or resize and re-encode them to WebP with a clear BEFORE → AFTER size comparison.
 - **Organize without breaking your flow** — Sort by file name or EXIF capture time, reorder by drag and drop, move multiple selected images together, and change the card size when needed.
@@ -52,10 +56,10 @@ Python, Node.js, and a local web server are not required. The builder uses Windo
 
 ## Usage
 
-The shortest path is **Add images → Create HTML**. Optimization and organization are optional.
+Follow **Add images → Choose image size → Check photo order → Album settings → Save HTML**. Conversion and edits are optional; use Next to keep the defaults.
 
-1. **Add images** — Add JPEG / PNG / WebP files by picker or drag and drop. Continue with **Next: Reduce file size →**, or use **Quick create** when you want to export immediately.
-2. **Reduce file size (optional)** — Choose WebP optimization when you want a smaller album. Compare the total original image size with the images that will be embedded in the HTML, then continue with **Next: Edit order, chapters & comments →**.
+1. **Add images** — select or drop JPEG / PNG / WebP files. The add area shrinks and **step 2: Reduce file size** opens.
+2. **Reduce file size** — choose **Continue with originals** for unchanged quality, or select WebP and **Optimize & continue**. Conversion finishes before opening the photo workspace.
 3. **Order, chapters & comments (optional)** — Sort automatically, drag cards into a new order, create chapter dividers, collapse chapters, or add comments.
 4. **Album settings (optional)** — Set the album title, choose or create a favicon, and configure the generated viewer.
 5. **Create HTML** — Follow the simplified **filename → size check → save** flow. Final preview is a secondary action when it is useful.
@@ -146,6 +150,8 @@ The repository includes a workflow that builds the standalone HTML, verifies it,
 4. GitHub Pages publishes this repository's `dist`. The production Browser Kitty entry point is [OneFile Album](https://browser-kitty.com/tools/onefile-album/).
 
 Each push to `main` runs the repository checks, rebuilds the standalone HTML, verifies offline constraints, and publishes the `dist` directory when GitHub Pages is enabled.
+
+A version change in `app.config.json` merged into `main` also creates a matching Git tag and GitHub Release after verification. The release contains the readable HTML, the self-extracting HTML, a ZIP with documentation, and SHA-256 checksums.
 
 ## Development and build layout
 

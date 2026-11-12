@@ -152,6 +152,8 @@ try {
     $env:ALBUM_HTML = Join-Path $Root $relative
     & node --test (Join-Path $Root "tests/dialog-scroll.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Help scroll regression tests failed: $relative" }
+    & node --test (Join-Path $Root "tests/editor-workflow.test.cjs")
+    if ($LASTEXITCODE -ne 0) { throw "Editor workflow tests failed for $relative" }
     & node --test (Join-Path $Root "tests/header.test.cjs")
     if ($LASTEXITCODE -ne 0) { throw "Header regression tests failed: $relative" }
     & node --test (Join-Path $Root "tests/editor-action-focus.test.cjs")
