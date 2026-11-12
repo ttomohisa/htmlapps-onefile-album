@@ -1,0 +1,102 @@
+name: Publish GitHub Release
+
+on:
+  push:
+    branches: [main]
+    paths: [app.config.json]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout release commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check release version
+        id: version
+        shell: pwsh
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $version = (Get-Content -Raw app.config.json | ConvertFrom-Json).version
+          if ($version -notmatch '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') {
+            throw "Expected a stable MAJOR.MINOR.PATCH version in app.config.json."
+          }
+          if ($env:GITHUB_EVENT_NAME -eq 'push' -and $env:BEFORE_SHA -notmatch '^0+$') {
+            $previous = (git show "${env:BEFORE_SHA}:app.config.json" | Out-String | ConvertFrom-Json).version
+            if ($previous -eq $version) {
+              Write-Host 'Version unchanged. Skipping release.'
+              exit 0
+            }
+          }
+          "tag=v$version" >> $env:GITHUB_OUTPUT
+
+      - name: Set up Node.js
+        if: steps.version.outputs.tag != ''
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24
+
+      - name: Build and verify standalone HTML
+        if: steps.version.outputs.tag != ''
+        shell: pwsh
+        run: ./scripts/check-repository.ps1
+
+      - name: Prepare release files
+        if: steps.version.outputs.tag != ''
+        shell: pwsh
+        run: ./scripts/package-release.ps1 -OutputDirectory (Join-Path $env:RUNNER_TEMP 'onefile-release')
+
+      - name: Publish tag and GitHub Release
+        if: steps.version.outputs.tag != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $tag = $env:RELEASE_TAG
+          $ref = "refs/tags/$tag"
+          $remoteRefs = @(git ls-remote origin $ref "$ref^{}")
+          if ($remoteRefs.Count -eq 0) {
+            gh api --method POST "repos/$env:GITHUB_REPOSITORY/git/refs" -f "ref=$ref" -f "sha=$env:GITHUB_SHA" --silent
+          } else {
+            # An annotated tag has a peeled ref pointing at the commit.
+            $peeled = $remoteRefs | Where-Object { $_.EndsWith("^{}") } | Select-Object -First 1
+            $existing = if ($peeled) { $peeled } else { $remoteRefs[0] }
+            if (($existing -split "\s+")[0] -ne $env:GITHUB_SHA) {
+              throw "Tag $tag already points to another commit."
+            }
+          }
+
+          $releaseDir = Join-Path $env:RUNNER_TEMP 'onefile-release'
+          $prefix = "$($env:GITHUB_REPOSITORY.Split('/')[-1])-$tag"
+          $files = @("$prefix.html", "$prefix.self-extract.html", "$prefix.zip", 'SHA256SUMS.txt') |
+            ForEach-Object { Join-Path $releaseDir $_ }
+
+          # A missing release is expected on the first run.
+          $PSNativeCommandUseErrorActionPreference = $false
+          $existingRelease = gh release view $tag --json isDraft,url 2>$null
+          $viewExit = $LASTEXITCODE
+          $PSNativeCommandUseErrorActionPreference = $true
+          if ($viewExit -eq 0) {
+            $release = $existingRelease | ConvertFrom-Json
+            if ($release.isDraft) {
+              gh release upload $tag @files --clobber
+              gh release edit $tag --draft=false
+            } else {
+              Write-Host "Release already published: $($release.url)"
+            }
+          } else {
+            gh release create $tag @files --verify-tag --title "OneFile Album $tag" --generate-notes
+          }

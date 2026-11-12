@@ -1,6 +1,25 @@
 # Changelog
 
-## Unreleased
+## 1.1.0
+
+- Release temporary image URLs when a damaged album fails to import. Preserve the viewer image when the browser restores the page from its back-forward cache.
+
+- Add a toolbar zoom slider and a blurred-photo background option. Keep all settings reachable by scrolling and close settings on a backdrop click.
+
+- Resize the thumbnail panel by drag or keyboard, label both switch states, and organize Help around creating and opening an album.
+
+- Use a quiet inset focus indicator for the image picker. Give exported albums a neutral charcoal toolbar, a mobile action sheet, and pointer-centered Ctrl + wheel zoom.
+
+- Keep clickable imported-photo thumbnails and filenames visible through steps 2–5, with loading placeholders and a loaded count.
+- Simplify stage 5 to filename, size and adjacent save/preview actions, removing nested step numbering and duplicate readiness bars.
+- Replace the generated viewer’s eight icon-only toolbar buttons with labeled Play/Pause, Fullscreen and More controls; group secondary actions in an accessible dismissible popover.
+
+- Remove competing export shortcuts before the finish step and use clearer image-quality and album-icon labels. Wait for successful WebP conversion before advancing, and reject stale continuation after input/settings changes.
+
+- Guide first-time users through all five stages: first image loading and album reopening lead to step 2, image-size choices have explicit next actions, and steps 3/4 have visible desktop and mobile continuations. Keep the compact add-image strip and preserve the chosen stage on later additions.
+- Apply the requested Japanese heading/lead and add workflow, localization, keyboard focus and queue regressions across all release variants.
+
+- Refine the album editor with flatter surfaces, quieter workflow navigation, clearer typography, and larger mobile actions. Preserve the generated viewer and all editing/export behavior.
 
 - Move build information to the end of Help while preserving existing smartphone visibility.
 - Keep the Help header and close button visible while scrolling expanded build information.

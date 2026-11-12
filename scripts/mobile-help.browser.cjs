@@ -47,6 +47,12 @@ async function main() {
             assert.equal(await page.locator(buildSelector).isVisible(), width > 680, label);
             for (const id of ['buildVersion', 'builtAt', 'dependencyCount']) assert.equal(await page.locator('#' + id).count(), 1, label);
 
+            const limitsSummary = body.locator('summary[data-i18n="helpLimitsTitle"]');
+            const limits = limitsSummary.locator('..');
+            assert.equal(await limits.getAttribute('open'), null, label + ': limits start collapsed');
+            await limitsSummary.click();
+            assert.equal(await limits.getAttribute('open'), '', label + ': limits expand');
+
             if (width > 680) {
               const summary = page.locator(buildSelector).locator('summary');
               await summary.focus();
@@ -56,7 +62,7 @@ async function main() {
               assert.notEqual(await page.locator('#builtAt').innerText(), '—', label);
             }
             await body.evaluate(el => { el.scrollTop = el.scrollHeight; });
-            const finalItem = page.locator(width <= 680 ? '[data-i18n="helpLimit3"]' : '#dependencyCount');
+            const finalItem = page.locator(width <= 680 ? '[data-i18n="helpGeneration"]' : '#dependencyCount');
             const finalBox = await finalItem.evaluate(el => {
               const text = el.firstChild, range = document.createRange();
               range.setStart(text, text.textContent.length - 1); range.setEnd(text, text.textContent.length);
@@ -94,8 +100,13 @@ async function main() {
                 return c.toDataURL('image/png').split(',')[1];
               });
               await page.setInputFiles('#fileInput', { name:'synthetic-layout.png', mimeType:'image/png', buffer:Buffer.from(png, 'base64') });
-              await page.waitForFunction(() => !document.querySelector('#exportButton').disabled);
+              await page.locator('#addedThumbs img').waitFor();
+              await page.locator('#optimizePanel').waitFor();
+              await page.locator('input[name="processingMode"][value="original"]').check();
+              await page.locator('#goArrangeButton').click();
               assert.equal(await page.locator('#imageGrid img').count(), 1, label + ': image imported');
+              await page.locator('#goAlbumButton').click();
+              await page.locator('#goExportStepButton').click();
               await page.locator('#outputFilename').fill('mobile-help-album');
               await page.locator('#outputFilename').blur();
               const pending = page.waitForEvent('download'); await page.locator('#exportButton').click();
